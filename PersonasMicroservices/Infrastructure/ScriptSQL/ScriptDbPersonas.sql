@@ -50,6 +50,7 @@ BEGIN
     direccion VARCHAR(255),                  
     telefono VARCHAR(15),                    
     correoElectronico VARCHAR(100),
+	estado bit,
 	CONSTRAINT FkTipoPersonaClaveForanea FOREIGN KEY (codigoTipoPersona)
         REFERENCES TipoPersonas(codigo)  -- Relación con tabla TipoPersonas
 );
@@ -59,3 +60,15 @@ ELSE
 BEGIN
     PRINT 'La tabla Personas ya existe.';
 END;
+GO
+IF NOT EXISTS (SELECT  codigo FROM TipoPersonas where codigo=1)
+BEGIN
+    INSERT INTO TipoPersonas VALUES (1, 'Medico')
+
+END
+GO
+IF NOT EXISTS (SELECT  codigo FROM TipoPersonas where codigo=2)
+BEGIN
+    INSERT INTO TipoPersonas VALUES (2, 'Paciente')
+
+END

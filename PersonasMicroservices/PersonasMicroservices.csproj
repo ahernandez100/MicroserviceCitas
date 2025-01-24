@@ -150,7 +150,13 @@
     <Compile Include="Api\Filters\ExeptionFilter.cs" />
     <Compile Include="Application\Commans\AddPersonaCommand.cs" />
     <Compile Include="Application\Commans\AddPersonaCommandHandler.cs" />
+    <Compile Include="Application\Commans\DeletePersonaCommand.cs" />
+    <Compile Include="Application\Commans\DeletePersonaCommandHandler.cs" />
     <Compile Include="Application\Commans\UpdatePersonaCommand.cs" />
+    <Compile Include="Application\Commans\UpdatePersonaCommandHandler.cs" />
+    <Compile Include="Application\Commans\UpdatePersonaRequest.cs" />
+    <Compile Include="Application\Queries\GetPersonaAllQuery.cs" />
+    <Compile Include="Application\Queries\GetPersonaAllQueryHandler.cs" />
     <Compile Include="Application\Queries\GetPersonaByIdQuery.cs" />
     <Compile Include="Application\Queries\GetPersonaByIdQueryHandler.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

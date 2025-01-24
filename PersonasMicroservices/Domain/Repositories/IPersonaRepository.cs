@@ -11,7 +11,8 @@ namespace PersonasMicroservices.Domain.Repositories
     {
         int Add(Persona persona);
         Persona GetById(int codigo);
+        List<Persona> GetAll();
         void Update(Persona persona);
-
+        int Delete(int codigo);
     }
 }
