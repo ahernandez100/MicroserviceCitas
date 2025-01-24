@@ -11,7 +11,7 @@ ELSE
 BEGIN
     PRINT 'La base de datos ya existe.';
 END;
-
+GO
 USE PersonasDb
 GO
 IF NOT EXISTS (
