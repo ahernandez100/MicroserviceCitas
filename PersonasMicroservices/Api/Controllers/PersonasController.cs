@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using PersonasMicroservices.Api.Filters;
 using PersonasMicroservices.Application.Commans;
 using PersonasMicroservices.Application.Queries;
 using System;
@@ -12,8 +13,8 @@ using System.Web.Http;
 
 namespace PersonasMicroservices.Api.Controllers
 {
+    [JwtAuthorizationFilter] // Aplica el filtro a todo el controlador
     [RoutePrefix("api/personas")]
-
     public class PersonasController : ApiController
     {
         private readonly IMediator _mediator;
