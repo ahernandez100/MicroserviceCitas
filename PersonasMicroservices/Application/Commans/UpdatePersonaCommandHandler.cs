@@ -37,10 +37,10 @@ namespace PersonasMicroservices.Application.Commans
             persona.telefono = request.Command.telefono;
             persona.correoElectronico = request.Command.correoElectronico;
             _repository.Update(persona);
-            return Task.FromResult(Unit.Value); // Envolver Unit.Value en un Task
+            return Task.FromResult(Unit.Value); // Retorna un valor vacío (indica éxito)
 
 
-            // Retorna un valor vacío (indica éxito)
+
         }
     }
 }

@@ -11,6 +11,10 @@ namespace CitasMicroService.Domain.Repositories
     {
         int Add(Cita citas);
         Cita GetById(int codigo);
+        List<Cita> GetAll();
+
+        void Update(Cita cita);
+        int Delete(int codigo);
 
 
 

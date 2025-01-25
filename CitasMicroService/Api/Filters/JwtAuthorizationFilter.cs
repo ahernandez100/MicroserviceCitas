@@ -11,7 +11,7 @@ using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
-namespace PersonasMicroservices.Api.Filters
+namespace CitasMicroService.Api.Filters
 {
     public class JwtAuthorizationFilter : AuthorizationFilterAttribute
     {
