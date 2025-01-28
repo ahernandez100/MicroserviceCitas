@@ -1,5 +1,6 @@
 using MediatR;
 using Newtonsoft.Json;
+using RecetasServices.Application.Services;
 using RecetasServices.Domain.Repositories;
 using RecetasServices.Infrastructure;
 using SimpleInjector;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -47,14 +49,14 @@ namespace RecetasServices
                 new SimpleInjectorWebApiDependencyResolver(container);
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            StartRabbitMQListener(container);
         }
         private void RegisterDependencies(Container container)
         {
             container.Register<DatabaseContext>(Lifestyle.Scoped);
             container.Register<IRecetaRepository, RecetaRepository>(Lifestyle.Scoped);
-            //// Registrar los comandos y sus handlers
-            //container.Register<AddPersonaCommandHandler>(Lifestyle.Scoped);
-            //container.Register<GetPersonaByIdQueryHandler>(Lifestyle.Scoped);
+            container.Register<IPersonaService, PersonaService>(Lifestyle.Scoped);
+            container.Register<ICitaService, CitaService>(Lifestyle.Scoped);
         }
         public static void Register(HttpConfiguration config)
         {
@@ -62,6 +64,23 @@ namespace RecetasServices
             config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             // Otras configuraciones
+        }
+        private void StartRabbitMQListener(Container container)
+        {
+
+            // Inicia el listener en un hilo separado
+            Thread listenerThread = new Thread(() =>
+            {
+                using (AsyncScopedLifestyle.BeginScope(container))
+                {
+                    var _recetaService = container.GetInstance<IMediator>();
+                    RabbitMQListener listener = new RabbitMQListener(_recetaService);
+                    listener.StartListening();
+                }
+            });
+
+            listenerThread.IsBackground = true; // Hacer que el hilo sea un hilo de fondo
+            listenerThread.Start();
         }
     }
 }

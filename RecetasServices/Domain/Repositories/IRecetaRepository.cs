@@ -11,6 +11,7 @@ namespace RecetasServices.Domain.Repositories
     {
         int Add(Receta citas);
         Receta GetById(int codigo);
+        Receta GetByIdPaciente(int codPAciente);
         void Update(Receta cita);
         int Delete(int codigo);
     }

@@ -29,6 +29,7 @@ CREATE TABLE Recetas (
 	fecha DATETIME NOT NULL,
     observacion VARCHAR(500) ,
     codigoCita INT NOT NULL,
+    estado VARCHAR(20) NOT NULL,
 )
     PRINT 'La tabla Recetas  se creó correctamente.';
 END

@@ -8,33 +8,72 @@ using System.Threading;
 using System.Web;
 using RecetasServices.Domain.Entities;
 using System.Reflection;
+using RecetasServices.Application.DTO;
+using RecetasServices.Application.Services;
+using RecetasServices.Api.Exeptions;
 
 namespace RecetasServices.Application.Commans
 {
-    public class AddRecetaCommandHandler : IRequestHandler<AddRecetaCommand, int>
+    public class AddRecetaCommandHandler : IRequestHandler<AddRecetaRequest, int>
     {
         private readonly IRecetaRepository _repository;
-        public AddRecetaCommandHandler(IRecetaRepository repository)
+        private readonly IPersonaService _personaService;
+        private readonly ICitaService _citaService;
+        public AddRecetaCommandHandler(IRecetaRepository repository, IPersonaService personaService, ICitaService citaService)
         {
             _repository = repository;
+            _personaService = personaService;
+            _citaService = citaService;
         }
-        public Task<int> Handle(AddRecetaCommand request, CancellationToken cancellationToken)
+        public Task<int> Handle(AddRecetaRequest request, CancellationToken cancellationToken)
         {
+            //  Validar paciente
+            PersonaDto paciente = _personaService.GetById(request.Commnad.codigoPaciente, request.token);
+            if (paciente == null)
+            {
+                throw new NotFoundException($"Paciente con codigo {request.Commnad.codigoPaciente} no existe.");
+            }
+            else
+            {
+                if (paciente.codigoTipoPersona == 1)
+                {
+                    throw new NotFoundException($"Persona con codigo {request.Commnad.codigoPaciente} no es paciente.");
+                }
+            }
+            //Validar medico
+            PersonaDto medico = _personaService.GetById(request.Commnad.codigoMedico, request.token);
+            if (medico==null)
+            {
+                throw new NotFoundException($"Medico con codigo {request.Commnad.codigoPaciente} no existe.");
+            }
+            else
+            {
+                if (medico.codigoTipoPersona == 2)
+                {
+                    throw new NotFoundException($"Persona con codigo {request.Commnad.codigoPaciente} no es medico.");
+                }
+            }
+
+            CitaDto cita = _citaService.GetById(request.Commnad.codigoCita, request.token);
+            if (cita == null)
+            {
+                throw new NotFoundException($"La cita con codigo {request.Commnad.codigoCita} no existe.");
+            }
             Receta receta = new Receta
             {
-                codigoPaciente = request.codigoPaciente,
-                nombrePaciente = request.nombrePaciente,
-                codigoMedico = request.codigoMedico,
-                nombreMedico= request.nombreMedico,
-                fecha = request.fecha,
-                observacion = request.observacion,
-                codigoCita= request.codigoCita,
-                detalleReceta = request.detalleReceta.Select((s, index) => new DetalleReceta
+                codigoPaciente = request.Commnad.codigoPaciente,
+                nombrePaciente = paciente.nombres+" "+ paciente.apellidos,
+                codigoMedico = request.Commnad.codigoMedico,
+                nombreMedico = medico.nombres + " " + medico.apellidos,
+                fecha = request.Commnad.fecha,
+                observacion = request.Commnad.observacion,
+                codigoCita = request.Commnad.codigoCita,
+                detalleReceta = request.Commnad.detalleReceta.Select((s, index) => new DetalleReceta
                 {
-                    numero= index + 1, // Calcula el número ascendente comenzando desde 1
+                    numero = index + 1, // Calcula el número ascendente comenzando desde 1
                     nombreMedicamento = s.nombreMedicamento,
-                    dosis=s.dosis,
-                    frecuencia=s.frecuencia,
+                    dosis = s.dosis,
+                    frecuencia = s.frecuencia,
 
                 }).ToList()
             };

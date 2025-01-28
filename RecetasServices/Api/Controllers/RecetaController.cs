@@ -35,16 +35,16 @@ namespace RecetasServices.Api.Controllers
             return Ok(receta);
         }
         /// <summary>
-        /// Crea una nueva receta
+        /// Obtiene una receta por su codigo del paciente
         /// </summary>
-        /// <param name="command">Datos de la recra a crear</param>
-        /// <returns>Mensaje  de éxito o error</returns>
-        [HttpPost]
-        [Route("")]
-        public IHttpActionResult AddReceta([FromBody] AddRecetaCommand command)
+        /// <param name="codigo">Codigo del paciente</param>
+        /// <returns>Receta si es encontrada, de lo contrario NotFound</returns>
+        [HttpGet]
+        [Route("GetRecetaByIdPaciente/{codigoPaciente:int}")]
+        public IHttpActionResult GetRecetaByIdPaciente(int codigoPaciente)
         {
-            int result = _mediator.Send(command).Result;
-            return Ok($"Receta agregada exitosamente con codigo {result}");
+            Receta receta = _mediator.Send(new GetRecetaByIdPacienteQuery { codigoPaciente = codigoPaciente }).Result;
+            return Ok(receta);
         }
         /// <summary>
         /// Actualiza una receta existente
@@ -54,7 +54,7 @@ namespace RecetasServices.Api.Controllers
         /// <returns>Mensaje  de éxito o error</returns>
         [HttpPut]
         [Route("{codigo:int}")]
-        public IHttpActionResult UpdtaePersona(int codigo, [FromBody] UpdateRecetaCommand command)
+        public IHttpActionResult UpdateReceta(int codigo, [FromBody] UpdateRecetaCommand command)
         {
             var request = new UpdateRecetaRequest
             {

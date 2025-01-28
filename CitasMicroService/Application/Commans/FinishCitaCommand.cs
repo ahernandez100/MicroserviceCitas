@@ -1,25 +1,19 @@
-﻿using MediatR;
-using RecetasServices.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace RecetasServices.Application.Commans
+namespace CitasMicroService.Application.Commans
 {
-    public class AddRecetaCommand
+    public class FinishCitaCommand
     {
         public int codigoPaciente { get; set; }
         public int codigoMedico { get; set; }
         public DateTime fecha { get; set; }
-
         public string observacion { get; set; }
         public int codigoCita { get; set; }
-
         public virtual ICollection<AddDetalleRecetaCommand> detalleReceta { get; set; } = new List<AddDetalleRecetaCommand>();
-
     }
     public class AddDetalleRecetaCommand
     {

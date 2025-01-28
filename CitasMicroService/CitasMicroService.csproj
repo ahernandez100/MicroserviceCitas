@@ -86,6 +86,12 @@
     <Reference Include="Microsoft.IdentityModel.Tokens, Version=8.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.Tokens.8.3.1\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
     </Reference>
+    <Reference Include="RabbitMQ.Client, Version=6.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.6.8.1\lib\net462\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=112.1.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.112.1.0\lib\net48\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleInjector.5.5.0\lib\net461\SimpleInjector.dll</HintPath>
     </Reference>
@@ -97,9 +103,15 @@
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=8.3.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.8.3.1\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipelines, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.8.0.0\lib\net462\System.IO.Pipelines.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
@@ -116,6 +128,12 @@
     </Reference>
     <Reference Include="System.Text.Json, Version=8.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Json.8.0.5\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Channels, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.8.0.0\lib\net462\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.RateLimiting, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.RateLimiting.8.0.0\lib\net462\System.Threading.RateLimiting.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -203,15 +221,24 @@
     <Compile Include="Api\Filters\JwtAuthorizationFilter.cs" />
     <Compile Include="Application\Commans\AddCitaCommand.cs" />
     <Compile Include="Application\Commans\AddCitaCommandHandler.cs" />
+    <Compile Include="Application\Commans\AddCitaRequest.cs" />
     <Compile Include="Application\Commans\DeleteCitaCommand.cs" />
     <Compile Include="Application\Commans\DeleteCitaCommandHandler.cs" />
+    <Compile Include="Application\Commans\FinishCitaCommand.cs" />
+    <Compile Include="Application\Commans\FinishCitaCommandHandler.cs" />
+    <Compile Include="Application\Commans\FinishCitaRequest.cs" />
     <Compile Include="Application\Commans\UpdateCitaCommand.cs" />
     <Compile Include="Application\Commans\UpdateCitaCommandHandler.cs" />
     <Compile Include="Application\Commans\UpdateCitaRequest.cs" />
+    <Compile Include="Application\DTO\PersonaDto.cs" />
     <Compile Include="Application\Queries\GetCitaAllQuery.cs" />
     <Compile Include="Application\Queries\GetCitaAllQueryHandler.cs" />
     <Compile Include="Application\Queries\GetCitaByIdQuery.cs" />
     <Compile Include="Application\Queries\GetCitaByIdQueryHandler.cs" />
+    <Compile Include="Application\Servicio\IPersonaService.cs" />
+    <Compile Include="Application\Servicio\IRabbitMQSender.cs" />
+    <Compile Include="Application\Servicio\PersonaService.cs" />
+    <Compile Include="Application\Servicio\RabbitMQSender.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Domain\Entities\Cita.cs" />
     <Compile Include="Domain\Repositories\ICitaRepository.cs" />

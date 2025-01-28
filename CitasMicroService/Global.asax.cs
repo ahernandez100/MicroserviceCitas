@@ -1,3 +1,4 @@
+using CitasMicroService.Application.Servicio;
 using CitasMicroService.Domain.Repositories;
 using CitasMicroService.Infrastructure;
 using MediatR;
@@ -54,6 +55,8 @@ namespace CitasMicroService
         {
             container.Register<DatabaseContext>(Lifestyle.Scoped);
             container.Register<ICitaRepository, CitaRepository>(Lifestyle.Scoped);
+            container.Register<IRabbitMQSender, RabbitMQSender>(Lifestyle.Scoped);
+            container.Register<IPersonaService, PersonaService>(Lifestyle.Scoped);
 
         }
     }

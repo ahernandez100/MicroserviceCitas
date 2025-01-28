@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace CitasMicroService.Api.Controllers
 {
-    [JwtAuthorizationFilter] // Aplica el filtro a todo el controlador
+   // [JwtAuthorizationFilter] // Aplica el filtro a todo el controlador
     [RoutePrefix("api/citas")]
     public class CitasController : ApiController
     {
@@ -51,7 +51,13 @@ namespace CitasMicroService.Api.Controllers
         [Route("")]
         public IHttpActionResult AddCita([FromBody] AddCitaCommand command)
         {
-            int result = _mediator.Send(command).Result;
+            var authHeader = Request.Headers.Authorization;
+            var request = new AddCitaRequest
+            {
+                token = authHeader.Parameter,
+                Commnad = command
+            };
+            int result = _mediator.Send(request).Result;
             return Ok($"Cita agregada exitosamente con codigo {result}");
         }
         /// <summary>
@@ -84,6 +90,20 @@ namespace CitasMicroService.Api.Controllers
 
             int result = _mediator.Send(new DeleteCitaCommand { codigo = codigo }).Result;
             return Ok($"Cita  con codigo {result} fue eliminada exitosamente");
+        }
+        [HttpPut]
+        [Route("FinishCita/{codigo:int}")]
+        public IHttpActionResult FinishCita(int codigo, [FromBody] FinishCitaCommand command)
+        {
+            var authHeader = Request.Headers.Authorization;
+            var request = new FinishCitaRequest
+            {
+                codigo = codigo,
+                token= authHeader.Parameter,
+                Commnad = command
+            };
+            _mediator.Send(request);
+            return Ok($"Cita Finalizada exitosamente");
         }
     }
 }

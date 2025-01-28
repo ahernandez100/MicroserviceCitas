@@ -26,24 +26,7 @@ namespace RecetasServices.Application.Commans
             {
                 throw new KeyNotFoundException($"No se encontró una receta con el codigo {request.codigo}");
             }
-
-            receta.codigoPaciente = request.Command.codigoPaciente;
-            receta.nombrePaciente = request.Command.nombrePaciente;
-            receta.codigoMedico = request.Command.codigoMedico;
-            receta.fecha = request.Command.fecha;
-            receta.observacion = request.Command.observacion;
-            receta.codigoCita = request.Command.codigoCita;
-            // Actualizar la lista de detalles de la receta
-
-            receta.detalleReceta = request.Command.detalleReceta.Select((s, index) => new DetalleReceta
-            {
-                codigoReceta = receta.codigo,
-                numero = s.numero,
-                nombreMedicamento = s.nombreMedicamento,
-                dosis = s.dosis,
-                frecuencia = s.frecuencia,
-
-            }).ToList();
+            receta.estado = request.Command.estado;
             _repository.Update(receta);
             return Task.FromResult(Unit.Value); // Retorna un valor vacío (indica éxito)
 

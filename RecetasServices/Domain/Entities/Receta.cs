@@ -21,6 +21,8 @@ namespace RecetasServices.Domain.Entities
 
         public string observacion { get; set; }
         public int codigoCita { get; set; }
+        [RegularExpression("^(Activa|Vencida|Entregada)$", ErrorMessage = "El estado debe ser 'Activa', 'Vencida' o 'Entregada'.")]
+        public string estado { get; set; } = "Activa";
         public virtual ICollection<DetalleReceta> detalleReceta { get; set; } = new List<DetalleReceta>();
 
     }

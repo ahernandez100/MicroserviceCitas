@@ -8,12 +8,6 @@ namespace CitasMicroService.Application.Commans
 {
     public class UpdateCitaCommand
     {
-        public int codigoPaciente { get; set; }
-        public string nombrePaciente { get; set; }
-        public int codigoMedico { get; set; }
-        public string nombreMedico { get; set; }
-        public DateTime fecha { get; set; }
-        public string lugar { get; set; }
         public string estado { get; set; }
     }
 }

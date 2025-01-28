@@ -21,6 +21,11 @@ namespace RecetasServices.Infrastructure
             return _context.Recetas.Include("detalleReceta").FirstOrDefault(w => w.codigo == codigo);
  
         }
+        public Receta GetByIdPaciente(int codPAciente)
+        {
+            return _context.Recetas.Include("detalleReceta").FirstOrDefault(w => w.codigoPaciente == codPAciente);
+
+        }
         public int Add(Receta receta)
         {
             var detalles = receta.detalleReceta;
